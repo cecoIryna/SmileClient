@@ -24,19 +24,23 @@ int main() {
 
     while (true) {
         key = _getch();
-        if (key == 27) break;
+        if (key == 27) break; 
 
         if (key == -32 || key == 0) {
             key = _getch();
             switch (key) {
-            case 72: y = max(0, y - 1); break;
-            case 80: y++; break;            
-            case 75: x = max(0, x - 1); break;
-            case 77: x++; break;              
+            case 72: y = max(0, y - 1); break; 
+            case 80: y = min(24, y + 1); break;
+            case 75: x = max(0, x - 1); break; 
+            case 77: x = min(79, x + 1); break; 
             }
 
-            int coords[2] = { x, y };
-            send(client, (char*)coords, sizeof(coords), 0);
+            char coords[10];
+            sprintf_s(coords, sizeof(coords), "%03d %03d", x, y);
+
+            send(client, coords, strlen(coords), 0);
+
+            system("cls");
         }
     }
 
